@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "bootstrap": "bash ./tools/scripts/local-setup/bootstrap.sh",
+    "reset": "bash ./tools/scripts/local-setup/reset.sh",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

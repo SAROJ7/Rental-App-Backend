@@ -1,0 +1,40 @@
+volumes:
+  rental_app_pg_data:
+    external: true
+  rental_app_pg_admin_data:
+    external: true
+
+services:
+  postgres-rental_app:
+    image: postgres:14
+    restart: always
+    container_name: postgres-rental_app
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+    volumes:
+      - rental_app_pg_data:/var/lib/postgresql/rental_app_pg_data
+    ports:
+      - '${PG_PORT}:5432'
+    networks:
+      - rental_app_platform
+
+  pgadmin-rental_app:
+    image: dpage/pgadmin4:latest
+    restart: always
+    container_name: pgadmin-rental_app
+    volumes:
+      - rental_app_pg_admin_data:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASS}
+    ports:
+      - '${PGADMIN_PORT}:80'
+    depends_on:
+      - postgres-rental_app
+    networks:
+      - rental_app_platform
+
+networks:
+  rental_app_platform:
+    external: true
