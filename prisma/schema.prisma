@@ -18,7 +18,7 @@ datasource db {
 enum Amenity {
   WasherDryer
   AirConditioning
-  DishWasher
+  Dishwasher
   HighSpeedInternet
   HardwoodFloors
   WalkInClosets
@@ -28,7 +28,7 @@ enum Amenity {
   Gym
   Parking
   PetsAllowed
-  Wifi
+  WiFi
 }
 
 enum Highlight {
@@ -46,15 +46,15 @@ enum Highlight {
   RecentlyRenovated
   CloseToTransit
   GreatView
-  QuietNeighbourhood
+  QuietNeighborhood
 }
 
 enum PropertyType {
   Rooms
-  TinyHouse
+  Tinyhouse
   Apartment
   Villa
-  TownHouse
+  Townhouse
   Cottage
 }
 
