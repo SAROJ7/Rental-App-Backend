@@ -22,12 +22,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seed": "ts-node prisma/seed.ts",
     "prisma:generate": "prisma generate",
-    "postprisma:generate": "shx cp -r node_modules/@prisma/client/index.d.ts ../client/src/types/prismaTypes.d.ts"
+    "dts:bundle": "dts-bundle-generator -o ../client/src/types/prismaTypes.d.ts node_modules/@prisma/client/index.d.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.10",
     "@nestjs/swagger": "^11.0.6",
     "@prisma/client": "^6.5.0",
@@ -35,6 +37,8 @@
     "class-validator": "^0.14.1",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "passport-jwt": "^4.0.1",
     "prisma": "^6.5.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
@@ -50,8 +54,11 @@
     "@types/express": "^5.0.0",
     "@types/helmet": "^4.0.0",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.10.7",
+    "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.2",
+    "dts-bundle-generator": "^9.5.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
