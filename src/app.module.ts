@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import configuration from './configs/configuration';
+import { TenantsModule } from './tenants/tenants.module';
+import { JwtModule } from '@nestjs/jwt';
+import { PrismaModule } from './prisma/prisma.module';
+import { ManagersModule } from './managers/managers.module';
 
 @Module({
   imports: [
@@ -10,6 +14,12 @@ import configuration from './configs/configuration';
       isGlobal: true,
       load: [configuration],
     }),
+    JwtModule.register({
+      global: true,
+    }),
+    PrismaModule,
+    TenantsModule,
+    ManagersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
