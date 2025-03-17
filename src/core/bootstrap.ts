@@ -7,6 +7,7 @@ import * as express from 'express';
 import helmet from 'helmet';
 import { validationConfig } from 'src/configs/validation.config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { APP } from 'src/constants';
 
 export class Bootstrap {
   private app: NestExpressApplication;
@@ -54,6 +55,11 @@ export class Bootstrap {
       .setDescription(
         'Rental Application For buying, selling and booking of the real estate.',
       )
+      .addBearerAuth({
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: APP.JWT_BEARER,
+      })
       .setVersion('1.0')
       .addTag('Rental App')
       .build();
