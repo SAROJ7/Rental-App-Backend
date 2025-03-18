@@ -22,4 +22,14 @@ export class ManagersService {
       throw new NotFoundException(`Manager not Found.`);
     }
   }
+
+  async updateManager(
+    cognitoId: string,
+    updateManagerDto: Partial<Omit<Manager, 'id'>>,
+  ) {
+    return this.prisma.manager.update({
+      where: { cognitoId },
+      data: { ...updateManagerDto },
+    });
+  }
 }
