@@ -1,9 +1,18 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ManagersService } from './managers.service';
 import { CreateManagerDto } from './dtos/create-manager.dto';
 import { JwtGuard } from 'src/guards/jwt.guard';
 import { Roles } from 'src/decorators/role.decorator';
+import { UpdateManagerDto } from './dtos/update-manager.dto';
 
 @ApiTags('Managers')
 @UseGuards(JwtGuard)
@@ -21,5 +30,14 @@ export class ManagersController {
   @Get(':cognitoId')
   getManager(@Param('cognitoId') cognitoId: string) {
     return this.managerService.getManager(cognitoId);
+  }
+
+  @Roles('manager')
+  @Patch(':cognitoId')
+  updateManager(
+    @Param('cognitoId') cognitoId: string,
+    @Body() updateManagerDto: UpdateManagerDto,
+  ) {
+    return this.managerService.updateManager(cognitoId, updateManagerDto);
   }
 }

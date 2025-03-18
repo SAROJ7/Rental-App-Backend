@@ -24,4 +24,16 @@ export class TenantsService {
       throw new NotFoundException(`Tenant not found`);
     }
   }
+
+  async updateTenant(
+    cognitoId: string,
+    updateTenantDto: Partial<Omit<Tenant, 'id'>>,
+  ) {
+    return this.prisma.tenant.update({
+      where: {
+        cognitoId,
+      },
+      data: { ...updateTenantDto },
+    });
+  }
 }

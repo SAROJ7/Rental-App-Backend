@@ -1,5 +1,5 @@
 import { Manager } from '@prisma/client';
-import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateManagerDto implements Omit<Manager, 'id'> {
   @IsString()
@@ -15,6 +15,6 @@ export class CreateManagerDto implements Omit<Manager, 'id'> {
   email: string;
 
   @IsString()
-  @IsEmpty()
+  @IsOptional()
   phoneNumber: string;
 }
