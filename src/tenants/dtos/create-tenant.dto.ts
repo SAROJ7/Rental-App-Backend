@@ -1,5 +1,5 @@
 import { Tenant } from '@prisma/client';
-import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateTenantDto implements Omit<Tenant, 'id'> {
   @IsString()
@@ -15,6 +15,6 @@ export class CreateTenantDto implements Omit<Tenant, 'id'> {
   email: string;
 
   @IsString()
-  @IsEmpty()
+  @IsOptional()
   phoneNumber: string;
 }

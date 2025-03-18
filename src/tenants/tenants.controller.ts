@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/decorators/role.decorator';
 import { JwtGuard } from 'src/guards/jwt.guard';
 import { TenantsService } from './tenants.service';
 import { CreateTenantDto } from './dtos/create-tenant.dto';
 import { APP } from 'src/constants';
+import { UpdateTenantDto } from './dtos/update-tenant.dto';
 
 @ApiTags('Tenants')
 @ApiBearerAuth(APP.JWT_BEARER)
@@ -23,5 +32,14 @@ export class TenantsController {
   @Get(':cognitoId')
   getTenant(@Param('cognitoId') cognitoId: string) {
     return this.tenantService.getTenant(cognitoId);
+  }
+
+  @Roles('tenant')
+  @Patch(':cognitoId')
+  updateTenant(
+    @Param('cognitoId') cognitoId: string,
+    @Body() updateTenantDto: UpdateTenantDto,
+  ) {
+    return this.tenantService.updateTenant(cognitoId, updateTenantDto);
   }
 }
