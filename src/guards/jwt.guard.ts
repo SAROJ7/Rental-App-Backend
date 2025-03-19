@@ -54,9 +54,6 @@ export class JwtGuard implements CanActivate {
       role: userRole,
     };
 
-    console.log({ allowedRoles });
-    console.log({ userRole });
-
     if (allowedRoles && allowedRoles.length > 0) {
       if (!allowedRoles.includes(userRole.toLowerCase())) {
         throw new ForbiddenException(`Access Denied`);
