@@ -7,6 +7,7 @@ import { TenantsModule } from './tenants/tenants.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from './prisma/prisma.module';
 import { ManagersModule } from './managers/managers.module';
+import { PropertyModule } from './property/property.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ManagersModule } from './managers/managers.module';
     PrismaModule,
     TenantsModule,
     ManagersModule,
+    PropertyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
