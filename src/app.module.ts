@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from './prisma/prisma.module';
 import { ManagersModule } from './managers/managers.module';
 import { PropertyModule } from './property/property.module';
-import { LeaseModule } from './lease/lease.module';
+import { LeaseModule } from './lease/leases.module';
 
 @Module({
   imports: [
