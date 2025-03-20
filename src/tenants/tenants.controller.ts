@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -41,5 +42,29 @@ export class TenantsController {
     @Body() updateTenantDto: UpdateTenantDto,
   ) {
     return this.tenantService.updateTenant(cognitoId, updateTenantDto);
+  }
+
+  @Roles('tenant')
+  @Get(':cognitoId/properties')
+  getProperties(@Param('cognitoId') cognitoId: string) {
+    return this.tenantService.getCurrentResidences(cognitoId);
+  }
+
+  @Roles('tenant')
+  @Post(':cognitoId/favorites/:propertyId')
+  addFavoriteProperty(
+    @Param('cognitoId') cognitoId: string,
+    @Param('propertyId') propertyId: string,
+  ) {
+    return this.tenantService.addFavoriteProperty(cognitoId, +propertyId);
+  }
+
+  @Roles('tenant')
+  @Delete(':cognitoId/favorites/:propertyId')
+  removeFavoriteProperty(
+    @Param('cognitoId') cognitoId: string,
+    @Param('propertyId') propertyId: string,
+  ) {
+    return this.tenantService.removeFavoriteProperty(cognitoId, +propertyId);
   }
 }
