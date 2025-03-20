@@ -40,4 +40,10 @@ export class ManagersController {
   ) {
     return this.managerService.updateManager(cognitoId, updateManagerDto);
   }
+
+  @Roles('manager')
+  @Get(':cognitoId/properties')
+  getProperties(@Param('cognitoId') cognitoId: string) {
+    return this.managerService.getManagerProperties(cognitoId);
+  }
 }
