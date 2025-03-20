@@ -79,7 +79,7 @@ export class PropertyService {
 
     console.log({ longitude, latitude });
 
-    await this.prisma.$transaction(async (tx) => {
+    const newProperty = await this.prisma.$transaction(async (tx) => {
       const [location] = await tx.$queryRaw<Location[]>`
         INSERT INTO "Location" (address, city, state, country, "postalCode", coordinates)
         VALUES (${address}, ${city}, ${state}, ${country}, ${postalCode}, ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326))
@@ -101,6 +101,7 @@ export class PropertyService {
 
       return newProperty;
     });
+    return newProperty;
   }
 
   async getProperties(propertyQueryDto: PropertyQueryDto) {
