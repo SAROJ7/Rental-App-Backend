@@ -150,7 +150,7 @@ model Application {
 
   property Property @relation(fields: [propertyId], references: [id])
   tenant   Tenant   @relation(fields: [tenantCognitoId], references: [cognitoId])
-  Lease    Lease?   @relation(fields: [leaseId], references: [id])
+  lease    Lease?   @relation(fields: [leaseId], references: [id])
 }
 
 model Lease {
