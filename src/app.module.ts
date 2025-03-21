@@ -9,6 +9,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ManagersModule } from './managers/managers.module';
 import { PropertyModule } from './property/property.module';
 import { LeaseModule } from './lease/leases.module';
+import { ApplicationsModule } from './applications/applications.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LeaseModule } from './lease/leases.module';
     ManagersModule,
     PropertyModule,
     LeaseModule,
+    ApplicationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
