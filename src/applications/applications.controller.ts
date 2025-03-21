@@ -37,7 +37,7 @@ export class ApplicationsController {
     return this.applicationService.createApplications(createApplicationDto);
   }
 
-  @Patch(':id')
+  @Patch(':id/status')
   @Roles('manager')
   update(
     @Param('id') id: string,

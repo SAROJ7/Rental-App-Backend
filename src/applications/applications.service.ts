@@ -30,17 +30,7 @@ export class ApplicationsService {
         },
       });
 
-      function calculateNextPaymentDate(startDate: Date): Date {
-        const today = new Date();
-        const nextPaymentDate = new Date(startDate);
-
-        while (nextPaymentDate <= today) {
-          nextPaymentDate.setDate(nextPaymentDate.getDate() + 1);
-        }
-        return nextPaymentDate;
-      }
-
-      const formattedApplications = await Promise.all(
+      return Promise.all(
         applications.map(async (app) => {
           const lease = await this.prismaService.lease.findFirst({
             where: {
@@ -63,13 +53,12 @@ export class ApplicationsService {
             lease: lease
               ? {
                   ...lease,
-                  nextPayment: calculateNextPaymentDate(lease.startDate),
+                  nextPayment: this.calculateNextPaymentDate(lease.startDate),
                 }
               : null,
           };
         }),
       );
-      return formattedApplications;
     }
   }
 
@@ -110,7 +99,7 @@ export class ApplicationsService {
         },
       });
 
-      const application = await tx.application.create({
+      return tx.application.create({
         data: {
           applicationDate: new Date(applicationDate),
           status,
@@ -129,8 +118,6 @@ export class ApplicationsService {
           },
         },
       });
-
-      return application;
     });
 
     return newApplication;
@@ -190,7 +177,7 @@ export class ApplicationsService {
       });
     }
 
-    const updatedApplication = await this.prismaService.application.findUnique({
+    return this.prismaService.application.findUnique({
       where: { id },
       include: {
         property: true,
@@ -198,7 +185,15 @@ export class ApplicationsService {
         lease: true,
       },
     });
+  }
 
-    return updatedApplication;
+  private calculateNextPaymentDate(startDate: Date): Date {
+    const today = new Date();
+    const nextPaymentDate = new Date(startDate);
+
+    while (nextPaymentDate <= today) {
+      nextPaymentDate.setDate(nextPaymentDate.getDate() + 1);
+    }
+    return nextPaymentDate;
   }
 }
