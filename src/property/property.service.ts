@@ -157,7 +157,7 @@ export class PropertyService {
 
     if (squareFeetMax) {
       whereConditions.push(
-        Prisma.sql`p."squareFeed" <= ${Number(squareFeetMax)}`,
+        Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`,
       );
     }
 
@@ -193,7 +193,7 @@ export class PropertyService {
 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
-            l.coordinates::geometry, 
+            l.coordinates, 
             ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326), 
             ${degrees})`,
       );
@@ -222,6 +222,8 @@ export class PropertyService {
             : Prisma.empty
         }
     `;
+
+    console.log({ completeQuery });
 
     return this.prisma.$queryRaw(completeQuery);
   }
