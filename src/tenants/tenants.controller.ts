@@ -51,7 +51,7 @@ export class TenantsController {
   }
 
   @Roles('tenant')
-  @Post(':cognitoId/favorites/:propertyId')
+  @Patch(':cognitoId/favorites/:propertyId')
   addFavoriteProperty(
     @Param('cognitoId') cognitoId: string,
     @Param('propertyId') propertyId: string,
