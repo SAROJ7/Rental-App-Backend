@@ -157,7 +157,7 @@ export class PropertyService {
 
     if (squareFeetMax) {
       whereConditions.push(
-        Prisma.sql`p."squareFeed" <= ${Number(squareFeetMax)}`,
+        Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`,
       );
     }
 
