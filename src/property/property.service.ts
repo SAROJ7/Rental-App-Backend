@@ -15,9 +15,9 @@ export class PropertyService {
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
   ) {
-    this.s3Client = new S3Client({
-      region: this.config.get<string>('aws_region'),
-    });
+    // this.s3Client = new S3Client({
+    //   region: this.config.get<string>('aws_region'),
+    // });
   }
 
   async createProperty(
@@ -34,23 +34,24 @@ export class PropertyService {
       ...propertyData
     } = createPropertyDto;
 
-    const photoUrls = await Promise.all(
-      photos.map(async (photo) => {
-        const uploadParams = {
-          Bucket: this.config.get<string>('s3_bucket_name')!,
-          Key: `properties/${Date.now()}-${photo.originalname}`,
-          Body: photo.buffer,
-          ContentType: photo.mimetype,
-        };
+    // const photoUrls = await Promise.all(
+    //   photos.map(async (photo) => {
+    //     const uploadParams = {
+    //       Bucket: this.config.get<string>('s3_bucket_name')!,
+    //       Key: `properties/${Date.now()}-${photo.originalname}`,
+    //       Body: photo.buffer,
+    //       ContentType: photo.mimetype,
+    //     };
 
-        const uploadResult = await new Upload({
-          client: this.s3Client,
-          params: uploadParams,
-        }).done();
+    //     const uploadResult = await new Upload({
+    //       client: this.s3Client,
+    //       params: uploadParams,
+    //     }).done();
 
-        return uploadResult.Location;
-      }),
-    );
+    //     return uploadResult.Location;
+    //   }),
+    // );
+    const photoUrls = [''];
 
     const geoCodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(
       {
@@ -187,15 +188,15 @@ export class PropertyService {
     if (latitude && longitude) {
       const lat = parseFloat(latitude);
       const lng = parseFloat(longitude);
-
       const radiusInKilometers = 1000;
       const degrees = radiusInKilometers / 111;
 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
-            l.coordinates, 
-            ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326), 
-            ${degrees})`,
+            l.coordinates::geometry,
+            ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
+            ${degrees}
+        )`,
       );
     }
 
@@ -222,8 +223,6 @@ export class PropertyService {
             : Prisma.empty
         }
     `;
-
-    console.log({ completeQuery });
 
     return this.prisma.$queryRaw(completeQuery);
   }
