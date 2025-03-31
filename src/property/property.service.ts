@@ -256,4 +256,22 @@ export class PropertyService {
       return propertyWithCoordinates;
     }
   }
+
+  async getPropertyLeases(propertyId: number) {
+    return this.prisma.lease.findMany({
+      where: { propertyId },
+      include: {
+        tenant: {
+          select: {
+            name: true,
+            email: true,
+            phoneNumber: true,
+          },
+        },
+      },
+      orderBy: {
+        startDate: 'desc',
+      },
+    });
+  }
 }

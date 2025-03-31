@@ -40,4 +40,10 @@ export class PropertyController {
   getProperty(@Param('id') id: string) {
     return this.propertyService.getProperty(+id);
   }
+
+  @Get(':id/leases')
+  @Roles('manager')
+  getPropertyLeases(@Param('id') id: string) {
+    return this.propertyService.getPropertyLeases(+id);
+  }
 }
