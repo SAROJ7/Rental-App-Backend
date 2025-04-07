@@ -1,7 +1,6 @@
 import { ApplicationStatus } from '@prisma/client';
 import { Transform } from 'class-transformer';
 import {
-  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -11,8 +10,8 @@ import {
 } from 'class-validator';
 
 export class CreateApplicationDto {
-  @IsDate()
-  applicationDate: Date;
+  @IsString()
+  applicationDate: string;
 
   @IsEnum(ApplicationStatus, {
     message: 'Status must be valid application status',
